@@ -9,7 +9,10 @@
         <project.java.version>1.8</project.java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+         <maven.compiler.source>1.8</maven.compiler.source>
+   		<maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+  
   <dependencies>
 	<!-- https://mvnrepository.com/artifact/junit/junit for the unit test -->
 	<dependency>
@@ -53,6 +56,15 @@
                 <mainClass>bidengine.BiddingExchange</mainClass>
             </configuration>
         </plugin>
-        </plugins>
+        <plugin>
+		    <groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-compiler-plugin</artifactId>
+		    <version>3.2</version> <!-- or whatever current version -->
+		    <configuration>
+		      <source>1.8</source>
+		      <target>1.8</target>
+		    </configuration>
+  		</plugin>
+       </plugins>
     </build>
 </project>
