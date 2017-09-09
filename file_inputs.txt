@@ -1,0 +1,18 @@
+showAllBidsAndItems
+addItem 1 abc 1000 10
+addItem 2 xys 1000 10
+placeBid 1 1 100
+placeBid 1 1 105
+placeBid 1 2 165
+placeBid 1 2 265
+showAllBidsAndItems
+placeBid 1 1 800
+placeBid 2 1 800
+placeBid 1 2 800
+placeBid 1 1 805
+showAllBidsAndItems
+showTopBids 1 5
+showTopBids 2 3
+placeBid 1 1 1001
+placeBid 1 1 1000
+showAllBidsAndItems

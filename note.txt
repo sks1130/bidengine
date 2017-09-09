@@ -1,0 +1,35 @@
+###notes on the project
+##@author : sachin.srivastava
+##Date : Sep 9 2017 
+##to handle this problem key is to manage the entry and exit of the bids in the bidding exchange platform , i have used the PriorityQueue to manage that which acts like a maxHeap in java
+
+1.Its a maven based project so maven should be installed on the system to build and deploy the project.
+	If you are using Linux, check your package manager : 
+		 sudo apt-get install mvn
+	if you are using Homebrew : 
+		brew install maven
+###artifacts used in the target file generation , here jar file
+2.version=1.1
+groupId=com.bidengine
+artifactId=bid_engine
+
+###maven command to build the project, run the test cases and execute the jar file
+3.mvn clean install exec:java
+
+##Java Version
+4. Used java version 1.8 
+
+5. If using  java -jar bid_engine-1.1.jar then it will prompt for console inputs either enter filename or blank to continue if filename is given 
+then it will print the output in the Console and if no filename is provided then Console input/output will work.
+
+6. bidding engine platform is implemented assuming that this is a core engine and above that load balancers/nginx on application server and Databases are already done.
+
+7.Here it is recommended to use distributed cache using couchBase or Memcached or Redis for the faster retrival
+
+8.core engine is possible to scale horizontally  if higher loads on the DBs occur then we should follow the Sharding on the collection/table of bidOrder.
+
+9.its a maven based project , generate also an executable jar with the option of filename as input or blank if want to test on the console.
+
+10. In the root directory sample test file file_inputs.txt is attached and output is kept in file_outputs.txt file.
+
+11. For the Console Input/Outputs - sample file console_input_output.txt is attached in the root directory.

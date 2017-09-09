@@ -1,0 +1,236 @@
+***Welcome to the Bidding Engine Platform****
+
+commands to be used for inputs::[addItem, placeBid, viewItem, notifyBidders, soldItem, expiryOfBid, showTopBids, showAllBidsAndItems]
+
+these commands can be translated into a MVC controller method if using spring , struts or somother MVC framework.
+
+Enter the commands to perform actions::
+
+Input:
+
+showAllBidsAndItems
+
+Output:
+
+No items and bids to show.
+
+Input:
+
+addItem 1 abc 1000 10
+
+Output:
+
+Item added in the list Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+
+Input:
+
+addItem 2 xys 1000 10
+
+
+Output:
+
+Item added in the list Items [id=2, name=xys, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+
+Input:
+
+placeBid 1 1 100
+
+
+Output:
+
+bid order is placed with the price: 100
+
+
+Input:
+
+placeBid 1 1 105
+
+Output:
+
+All the bidders are being notified new item price: 105 Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+bid order is placed with the price: 105
+
+
+Input:
+
+placeBid 1 2 165
+
+Output:
+
+All the bidders are being notified new item price: 165 Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+bid order is placed with the price: 165
+
+Input:
+
+placeBid 1 2 265
+
+Output:
+
+All the bidders are being notified new item price: 265 Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+bid order is placed with the price: 265
+
+Input:
+
+showAllBidsAndItems
+
+Output:
+
+Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+And Bids details are::
+
+BidNode [userId=2, bidPrice=265]
+
+BidNode [userId=2, bidPrice=165]
+
+BidNode [userId=1, bidPrice=105]
+
+BidNode [userId=1, bidPrice=100]
+
+Items [id=2, name=xys, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+No Bids details to show
+
+Input:
+
+placeBid 1 1 800
+
+Output:
+
+All the bidders are being notified new item price: 800 Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+bid order is placed with the price: 800
+
+Input:
+
+placeBid 2 1 800
+
+Output:
+
+bid order is placed with the price: 800
+
+Input:
+
+placeBid 1 2 800
+
+Output:
+
+bid order is placed with the price: 800
+
+Input:
+
+placeBid 1 1 805
+
+Output:
+
+All the bidders are being notified new item price: 805 Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+bid order is placed with the price: 805
+
+Input:
+
+showAllBidsAndItems
+
+Output:
+
+Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+And Bids details are::
+
+BidNode [userId=1, bidPrice=805]
+
+BidNode [userId=2, bidPrice=265]
+
+BidNode [userId=1, bidPrice=800]
+
+BidNode [userId=1, bidPrice=100]
+
+BidNode [userId=2, bidPrice=165]
+
+BidNode [userId=1, bidPrice=105]
+
+BidNode [userId=2, bidPrice=800]
+
+Items [id=2, name=xys, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+And Bids details are::
+
+BidNode [userId=1, bidPrice=800]
+
+Input:
+
+showTopBids 1 3
+
+Output:
+
+Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+And Bids details are::
+
+BidNode [userId=1, bidPrice=805]
+
+BidNode [userId=1, bidPrice=800]
+
+BidNode [userId=2, bidPrice=800]
+
+Input:
+
+showTopBids 1 6
+
+Output:
+
+Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+And Bids details are::
+
+BidNode [userId=1, bidPrice=805]
+
+BidNode [userId=1, bidPrice=800]
+
+BidNode [userId=2, bidPrice=800]
+
+BidNode [userId=2, bidPrice=265]
+
+BidNode [userId=2, bidPrice=165]
+
+BidNode [userId=1, bidPrice=105]
+
+Input:
+
+placeBid 1 1 1001
+Output:
+
+
+bid price not in the range of the item auction price range
+
+Input:
+
+placeBid 1 1 1000
+
+Output:
+
+Notifying to the bidders that item is sold out at the price: 1000 Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+item is sold out at the price: 1000 Items [id=1, name=abc, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+Input:
+
+showAllBidsAndItems
+
+Output:
+
+Items [id=2, name=xys, minPrice=1, maxPrice=1000, expiryTime=10, currentPrice=null]
+
+And Bids details are::
+
+BidNode [userId=1, bidPrice=800]
+
+Input:
+
+Existing from the system.
+
