@@ -5,6 +5,7 @@ package models;
 
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.concurrent.PriorityBlockingQueue;
 
 import constants.Constants.ItemStatus;
 
@@ -21,8 +22,8 @@ public class Items{
 	private Long minPrice = 1L;  // setting a default minimum value to 1
 	private Long currentPrice;
 	private ItemStatus status = ItemStatus.Active;
-	public PriorityQueue<BidNode> prioityQueue = new PriorityQueue<>(new Comparator<BidNode>() {
-		//it will be act like a maxHeap and head would always give top bid user
+	public PriorityBlockingQueue<BidNode> prioityQueue = new PriorityBlockingQueue<>(11,new Comparator<BidNode>() {
+		//it will be act like a maxHeap and head would always give top bid user//deafult capacity 11
 		@Override
 		public int compare(BidNode o1, BidNode o2) {
 			return o2.getBidPrice().compareTo(o1.getBidPrice());
@@ -73,13 +74,6 @@ public class Items{
 	public void setCurrentPrice(Long currentPrice) {
 		this.currentPrice = currentPrice;
 	}
-	public PriorityQueue<BidNode> getPrioityQueue() {
-		return prioityQueue;
-	}
-
-	public void setPrioityQueue(PriorityQueue<BidNode> prioityQueue) {
-		this.prioityQueue = prioityQueue;
-	}
 
 	public ItemStatus getStatus() {
 		return status;
@@ -92,5 +86,13 @@ public class Items{
 	public String toString() {
 		return "Items [id=" + id + ", name=" + name + ", minPrice=" + minPrice + ", maxPrice=" + maxPrice
 				+ ", expiryTime=" + expiryTime + ", currentPrice=" + currentPrice + "]";
+	}
+
+	public PriorityBlockingQueue<BidNode> getPrioityQueue() {
+		return prioityQueue;
+	}
+
+	public void setPrioityQueue(PriorityBlockingQueue<BidNode> prioityQueue) {
+		this.prioityQueue = prioityQueue;
 	}
 }

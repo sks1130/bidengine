@@ -2,17 +2,16 @@ package bidengine;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Scanner;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.PriorityBlockingQueue;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import constants.Constants.BidExchangeCommands;
 import constants.Constants.ItemStatus;
@@ -32,7 +31,8 @@ public class BiddingExchange {
 	// or Couchbase/Memcached/redis
 	// here so constant time retrival in O(1) time and when an auction completes
 	// it will be evicted
-	private static Map<Long, Items> auctionItems = new HashMap<>();
+	private static Map<Long, Items> auctionItems = new ConcurrentHashMap<>();
+	private static final ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
 
 	public static void main(String[] args) {
 		try {
@@ -104,6 +104,7 @@ public class BiddingExchange {
 	private static String addItem(Long id, String name, Long maxPrice, Long expiry) {
 		try {
 			// adding item in the Auction items
+			lock.writeLock().lock();
 			Items item = new Items(id, name, maxPrice, expiry);
 			if (!auctionItems.containsKey(id)) {
 				auctionItems.put(id, item);
@@ -116,11 +117,22 @@ public class BiddingExchange {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";
+		}finally{
+			lock.writeLock().unlock();
 		}
 	}
 
 	public static Items getItem(Long id) {
-		return auctionItems.get(id);
+		try {
+			lock.readLock().lock();
+			return auctionItems.get(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			lock.readLock().unlock();
+		}
+		
 	}
 
 	public static int totalItems() {
@@ -129,6 +141,7 @@ public class BiddingExchange {
 
 	private static String placeBid(Long itemId, Long userId, Long price) {
 		try {
+			lock.writeLock().lock();
 			Items item = getItem(itemId);
 			if (item == null) {
 				return Messages.PlaceBidItemNotExist.getValue();
@@ -157,6 +170,8 @@ public class BiddingExchange {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return "";
+		} finally {
+			lock.writeLock().unlock();
 		}
 	}
 
@@ -197,7 +212,7 @@ public class BiddingExchange {
 			if (auctionItems.size() != 0) {
 				for (Map.Entry<Long, Items> entry : auctionItems.entrySet()) {
 					System.out.println(entry.getValue().toString());
-					PriorityQueue<BidNode> pq = entry.getValue().getPrioityQueue();
+					PriorityBlockingQueue<BidNode> pq = entry.getValue().getPrioityQueue();
 					Iterator<BidNode> it = pq.iterator();
 					if (it.hasNext()) {
 						System.out.println("And Bids details are::");
@@ -229,7 +244,7 @@ public class BiddingExchange {
 					System.out.println(Messages.NoItemAndBids.getValue());
 				}
 				System.out.println(item.toString());
-				PriorityQueue<BidNode> pq = item.getPrioityQueue();
+				PriorityBlockingQueue<BidNode> pq = item.getPrioityQueue();
 				Iterator<BidNode> it = pq.iterator();
 				if (pq.size() > 0) {
 					System.out.println("And Bids details are::");
